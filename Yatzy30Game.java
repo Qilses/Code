@@ -11,11 +11,11 @@ public class Yatzy30Game {
         
        
                 if (numPlayers == 0) {
-                    // Hämta antalet spelare om det inte redan är initialiserat
+                    // Kolla antalet spelare
                     System.out.println("Välkommen till Yatzy 30!");
                     System.out.print("Ange antalet spelare: ");
                     numPlayers = scanner.nextInt();
-                    scanner.nextLine(); // Konsumera ny rad
+                    scanner.nextLine(); // Kolla nästa rad
 
                     // Skapa en lista för att lagra spelarnamn
                     for (int i = 0; i < numPlayers; i++) {
@@ -23,16 +23,17 @@ public class Yatzy30Game {
                         spelarNamns.add(scanner.nextLine());
                     }
 
-                    // Initialisera playerDiceThrows och remDiceMap
+                    // Skapa en map för att lagra tärningarna för varje spelare
                     for (String spelarNamn : spelarNamns) {
                         playerDiceThrows.put(spelarNamn, new ArrayList<>());
-                        remDiceMap.put(spelarNamn, 6); // Varje spelare börjar med 5 tärningar
+                        remDiceMap.put(spelarNamn, 6); // Varje spelare börjar med 6 tärningar
                     }
                 }
+                // Ifall man vill starta om så startar spelet om härifrånn
                 try {
                     boolean restartGame;
                     do {
-                // Spela spelet
+                // Här startar spelet
                 boolean gameRunning = true;
                 while (gameRunning) {
                     // Kontrollera om någon spelare har kvarvarande tärningar
@@ -59,7 +60,8 @@ public class Yatzy30Game {
                         System.out.println("Slår tärningarna...");
 
                         int tärningsNumber = remDiceMap.get(spelarNamn);
-                        int[] dice = tärKast(tärningsNumber); // Slå de återstående tärningarna för spelaren
+                        // Slå de återstående tärningarna för spelaren
+                        int[] dice = tärKast(tärningsNumber); 
                         System.out.println("Ditt slag: " + Arrays.toString(dice));
 
                         List<Integer> keptDice = new ArrayList<>();
@@ -70,6 +72,7 @@ public class Yatzy30Game {
                         String input = scanner.nextLine();
                         String[] keptIndexes = input.split(" ");
                         for (String index : keptIndexes) {
+                            
                             int i = Integer.parseInt(index) - 1; // Justera index
                             if (i >= 0 && i < tärningsNumber) {
                                 keptDice.add(dice[i]);
@@ -103,7 +106,8 @@ public class Yatzy30Game {
 
                 // Fråga om användaren vill starta om
                 System.out.println("\nTryck 'r' för att starta om eller annan tangent för att avsluta:");
-                char userInput = scanner.nextLine().charAt(0); // Hämta det första tecknet av inmatningen
+                // Kollar vilket det första tecknet var man knappade in
+                char userInput = scanner.nextLine().charAt(0); 
                 restartGame = (userInput == 'r');
             } while (restartGame);
         } catch (Exception e) {
@@ -113,7 +117,7 @@ public class Yatzy30Game {
         }
     }
 
-    // Metod för att slå tärningarna
+    // Metoden för att slå tärningarna
     private static int[] tärKast(int tärningsNumber) {
         Random rand = new Random();
         int[] dice = new int[tärningsNumber];
@@ -123,7 +127,7 @@ public class Yatzy30Game {
         return dice;
     }
 
-    // Metod för att beräkna summan av nummer i en lista
+    // Metoden för att beräkna summan av nummer i en lista
     private static int sum(List<Integer> numbers) {
         int sum = 0;
         for (int number : numbers) {
